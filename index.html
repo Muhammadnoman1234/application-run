@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Edrunner: Campus Logistics</title>
+    <meta name="description"
+        content="Hyper-local delivery service inside universities. Get food, documents, and parcels delivered from gate to desk.">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-fab.css">
+    <link rel="stylesheet" href="style-payments.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="dark-theme">
+    <div id="app">
+        <!-- Splash Screen -->
+        <div id="splash" class="screen active">
+            <div class="splash-content">
+                <img src="logo.png" alt="Edrunner Logo">
+                <h1>EDRUNNER</h1>
+                <div class="loader"></div>
+            </div>
+        </div>
+
+        <!-- Auth Screens -->
+        <div id="auth-choice" class="screen">
+            <main class="auth-container"
+                style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; padding:0 32px; text-align:center;">
+                <img src="logo.png" style="width:120px; margin-bottom:32px;">
+                <h2 style="font-size:2rem; margin-bottom:12px;">Move Anything</h2>
+                <p style="color:var(--text-dim); margin-bottom:48px;">The exclusive peer-to-peer campus delivery
+                    network.</p>
+                <div style="width:100%; display:flex; flex-direction:column; gap:16px;">
+                    <button class="order-now-btn" onclick="switchTab('login')" style="width:100%;">Login to
+                        Account</button>
+                    <button class="secondary-btn" onclick="switchTab('signup')"
+                        style="border: 1px solid var(--glass); background:transparent; color:#fff; padding:18px; border-radius:16px; font-weight:700;">Create
+                        Account</button>
+                </div>
+            </main>
+        </div>
+
+        <div id="login" class="screen">
+            <header class="glass-header">
+                <div class="brand"><i data-lucide="chevron-left" onclick="switchTab('auth-choice')"></i> Login</div>
+            </header>
+            <main class="content-padding" style="padding-top: 100px;">
+                <div class="form-card">
+                    <div class="input-block">
+                        <label>Email or University ID</label>
+                        <input type="text" id="login-id" placeholder="e.g. CS12345">
+                    </div>
+                    <div class="input-block">
+                        <label>Password</label>
+                        <input type="password" id="login-pass" placeholder="••••••••">
+                    </div>
+                    <button class="order-now-btn" onclick="handleLogin()" style="width:100%; margin-top:16px;">Sign
+                        In</button>
+                </div>
+            </main>
+        </div>
+
+        <div id="signup" class="screen">
+            <header class="glass-header">
+                <div class="brand"><i data-lucide="chevron-left" onclick="switchTab('auth-choice')"></i> Join Edrunner
+                </div>
+            </header>
+            <main class="content-padding" style="padding-top: 100px; overflow-y: auto;">
+                <div class="form-card">
+                    <div class="input-block">
+                        <label>Full Name</label>
+                        <input type="text" id="reg-name" placeholder="John Doe">
+                    </div>
+                    <div class="input-block">
+                        <label>University</label>
+                        <select id="reg-uni">
+                            <option>NED University</option>
+                            <option>DOW University</option>
+                            <option>Karachi University</option>
+                            <option>IBA Karachi</option>
+                        </select>
+                    </div>
+                    <div class="input-block">
+                        <label>University ID</label>
+                        <input type="text" id="reg-id" placeholder="e.g. CS12345">
+                    </div>
+                    <div class="input-block">
+                        <label>Phone Number</label>
+                        <input type="tel" id="reg-phone" placeholder="03XXXXXXXXX">
+                    </div>
+                    <div class="input-block">
+                        <label>Password</label>
+                        <input type="password" id="reg-pass" placeholder="At least 8 characters">
+                    </div>
+                    <button class="order-now-btn" onclick="handleSignup()" style="width:100%; margin-top:16px;">Register
+                        Now</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Main Feed Screen -->
+        <div id="feed" class="screen">
+            <header class="glass-header">
+                <div class="brand">
+                    <img src="logo.png" class="mini-logo">
+                    <span>Edrunner Feed</span>
+                </div>
+                <div class="wing-switcher">
+                    <div class="wing-btn active" id="btn-standard" onclick="setWing('standard')">Standard</div>
+                    <div class="wing-btn" id="btn-women" onclick="setWing('women')">Women-Only</div>
+                </div>
+                <div class="actions">
+                    <i data-lucide="bell"></i>
+                </div>
+            </header>
+
+            <main class="video-container" id="video-feed">
+                <!-- Video Ads & Content -->
+                <div class="video-item standard-content"
+                    style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('burger.png'); background-size: cover;">
+                    <div class="sponsored-badge">SPONSORED</div>
+                    <div class="video-overlay">
+                        <div class="video-info">
+                            <h3>Flash Sale: Midnight Burger</h3>
+                            <p>Grab 20% off at the Main Cafe tonight. Limited stock!</p>
+                            <div class="tags">
+                                <span class="tag">DEAL</span>
+                                <span class="tag">HOT</span>
+                            </div>
+                        </div>
+                        <button class="order-now-btn" onclick="openOrderModal('Midnight Burger', 200)">
+                            Claim PKR 200 Deal <i data-lucide="zap"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="video-item standard-content"
+                    style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('burger.png');">
+                    <div class="video-overlay">
+                        <div class="video-info">
+                            <h3>NED Main Biryani</h3>
+                            <p>Authentic student biryani delivered to your desk in minutes.</p>
+                            <div class="tags">
+                                <span class="tag">NED</span>
+                                <span class="tag">BESTSELLER</span>
+                            </div>
+                        </div>
+                        <button class="order-now-btn" onclick="openOrderModal('NED Biryani', 180)">
+                            Order Now • PKR 180 <i data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="video-item standard-content"
+                    style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('burger.png');">
+                    <div class="video-overlay">
+                        <div class="video-info">
+                            <h3>IBA Main Cafe</h3>
+                            <p>Movenpick Ice Cream Bowl. The perfect study break treat.</p>
+                            <div class="tags">
+                                <span class="tag">IBA</span>
+                                <span class="tag">PREMIUM</span>
+                            </div>
+                        </div>
+                        <button class="order-now-btn" style="background:#c0392b; color:#fff;"
+                            onclick="openOrderModal('IBA Ice Cream', 300)">
+                            Order from IBA <i data-lucide="shopping-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Discover Screen -->
+        <div id="discover" class="screen">
+            <header class="glass-header">
+                <div class="brand">Discover</div>
+            </header>
+            <main class="discover-content">
+                <div class="search-container">
+                    <div class="search-bar">
+                        <i data-lucide="search"></i>
+                        <input type="text" placeholder="Search cafes or food items...">
+                    </div>
+                </div>
+                <div class="category-grid">
+                    <div class="cat-item highlight-ned">NED Campus</div>
+                    <div class="cat-item highlight-dow">DOW Campus</div>
+                    <div class="cat-item highlight-ku">Karachi Uni</div>
+                    <div class="cat-item highlight-iba">IBA Karachi</div>
+                    <div class="cat-item">Fast Food</div>
+                    <div class="cat-item">Stationery</div>
+                    <div class="cat-item">Parcels</div>
+                    <div class="cat-item">Documents</div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Maps Screen -->
+        <div id="maps" class="screen">
+            <header class="glass-header">
+                <div class="brand">Live Tracking</div>
+            </header>
+            <main class="content-padding" style="padding-top: 80px;">
+                <div id="map-container"
+                    style="height: 70vh; border-radius: 24px; overflow: hidden; border:1px solid var(--glass);">
+                    <iframe width="100%" height="100%" frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14474.3468902891!2d67.114704!3d24.912389!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb3388c3400305f%3A0xeebb2f7d3e230489!2sNED%20University%20of%20Engineering%20and%20Technology!5e0!3m2!1sen!2s!4v1705010000000!5m2!1sen!2s"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </main>
+        </div>
+
+        <!-- Chat Screen -->
+        <div id="chat" class="screen">
+            <header class="glass-header">
+                <div class="brand">Messages</div>
+                <div class="actions">
+                    <i data-lucide="phone" onclick="openWhatsApp()" style="color: #25D366; cursor: pointer;"></i>
+                </div>
+            </header>
+            <main class="chat-main" style="padding-top:70px; height: calc(100% - 70px);">
+                <div id="chat-messages">
+                    <div class="chat-bubble received">
+                        Hey! All active delivery chats appear here.
+                        <span class="chat-time">Admin</span>
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <button class="icon-button mic-btn" onclick="startRecording()"><i data-lucide="mic"></i></button>
+                    <input type="text" id="chat-input" placeholder="Message runner..."
+                        style="flex:1; background:var(--glass); border:none; padding:14px 20px; border-radius:30px; color:#fff; outline:none;">
+                    <button class="icon-button primary" onclick="sendMessage()"><i data-lucide="send"></i></button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Orders Screen -->
+        <div id="orders" class="screen">
+            <header class="glass-header">
+                <div class="brand">My Orders</div>
+                <div class="actions" onclick="triggerSOS()"><i data-lucide="shield-alert" style="color: #ff4444;"></i>
+                </div>
+            </header>
+            <main class="content-padding" style="padding-top: 90px; overflow-y: auto;">
+                <div id="orders-list"></div>
+            </main>
+        </div>
+
+        <!-- Profile Screen -->
+        <div id="profile" class="screen">
+            <header class="glass-header">
+                <div class="brand">Profile</div>
+                <div class="actions"><i data-lucide="settings"></i></div>
+            </header>
+            <main class="profile-content">
+                <div class="profile-card">
+                    <div class="avatar">UD</div>
+                    <h2 id="profile-name">User Name</h2>
+                    <p style="color:var(--text-dim); font-size:0.9rem;">Verified Student</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box"><strong>12</strong><span>Orders</span></div>
+                    <div class="stat-box" onclick="rechargeWallet()"
+                        style="cursor:pointer; border-color:var(--primary);">
+                        <strong style="color:var(--primary);">+</strong><span>Top Up</span>
+                    </div>
+                </div>
+
+                <div class="menu-list">
+                    <div class="menu-link" onclick="switchTab('join-form')"><i data-lucide="user-plus"></i> Join Runner
+                        Squad</div>
+                    <div class="menu-link" onclick="switchTab('admin-login')"><i data-lucide="lock"></i> Admin Console
+                    </div>
+                    <div class="menu-link" onclick="startWhatsAppDeployment()"
+                        style="border: 1px solid #25D366; color: #25D366; margin-top: 12px;"><i
+                            data-lucide="rocket"></i> Deploy to WhatsApp</div>
+                    <div class="menu-link"><i data-lucide="wallet"></i> My Wallet <span
+                            style="margin-left:auto; font-weight:800; color:var(--primary);">PKR 450</span></div>
+                    <div class="menu-link" onclick="handleLogout()"
+                        style="margin-top:24px; border:1px solid #ff4444; color:#ff4444;">
+                        <i data-lucide="log-out" style="color:#ff4444;"></i> Log Out
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Admin Dashboard Screen -->
+        <div id="admin-dashboard" class="screen">
+            <header class="glass-header">
+                <div class="brand">Admin Console</div>
+                <div class="actions" onclick="switchTab('profile')"><i data-lucide="x"></i></div>
+            </header>
+            <main class="content-padding" style="padding-top: 90px; overflow-y: auto;">
+                <div class="stats-grid">
+                    <div class="stat-box"><strong><span id="total-orders-count">0</span></strong><span>Active
+                            Orders</span></div>
+                    <div class="stat-box"><strong><span id="total-runners-count">0</span></strong><span>Online
+                            Runners</span></div>
+                </div>
+
+                <h3 style="margin: 20px 0 10px 0; font-size: 1.1rem;">📍 Live Runner Tracking</h3>
+                <div id="admin-runners-list" class="runner-list" style="display:flex; flex-direction:column; gap:10px;">
+                    <!-- Dynamic Runner List -->
+                </div>
+
+                <h3 style="margin: 20px 0 10px 0; font-size: 1.1rem;">📦 Active Dispatch</h3>
+                <div id="admin-orders-list">
+                    <!-- Dynamic Orders -->
+                </div>
+            </main>
+        </div>
+
+        <!-- Top Up Modal -->
+        <div id="topup-modal" class="modal-overlay">
+            <div class="modal-sheet">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                    <h2>Top Up Wallet</h2>
+                    <i data-lucide="x" onclick="closeTopUpModal()" style="cursor:pointer;"></i>
+                </div>
+                <p style="color:var(--text-dim); margin-bottom:20px;">Select Payment Method:</p>
+                <div style="display:flex; flex-direction:column; gap:12px;">
+                    <div class="payment-group">
+                        <button class="payment-btn easypaisa" onclick="processPayment('EasyPaisa')">
+                            <span class="ep-badge">EP</span> EasyPaisa
+                        </button>
+                        <div style="font-size:0.85rem; color:var(--text-dim); margin-top:4px; margin-left:8px;">
+                            Send to: <strong style="color:#fff;">0349-0872984</strong>
+                        </div>
+                    </div>
+
+                    <button class="payment-btn jazzcash" onclick="processPayment('JazzCash')">
+                        <span class="jc-badge">JC</span> JazzCash
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Modal -->
+        <div id="order-modal" class="modal-overlay">
+            <div class="modal-sheet">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                    <h2 id="modal-title">Place Order</h2>
+                    <i data-lucide="x" onclick="closeOrderModal()" style="cursor:pointer;"></i>
+                </div>
+                <div class="input-block">
+                    <label>Drop-off Location</label>
+                    <input type="text" id="order-location" placeholder="e.g. CS Dept, 2nd Floor">
+                </div>
+                <div class="summary-card">
+                    <div class="summary-row"><span>Delivery Fee</span><span>PKR 30</span></div>
+                    <div class="summary-row total"><span>Total Amount</span><span id="total-price">PKR 0</span></div>
+                </div>
+                <button class="order-now-btn" onclick="confirmOrder()" style="width:100%;">Confirm Delivery <i
+                        data-lucide="check"></i></button>
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast">Order Placed Successfully! 🚀</div>
+
+        <!-- Admin Login Screen -->
+        <div id="admin-login" class="screen">
+            <header class="glass-header">
+                <div class="brand"><i data-lucide="chevron-left" onclick="switchTab('profile')"></i> Admin Login</div>
+            </header>
+            <main class="content-padding" style="padding-top: 100px;">
+                <div class="form-card">
+                    <div class="input-block">
+                        <label>Admin Username</label>
+                        <input type="text" id="admin-user" placeholder="Enter Admin Username" value="admin">
+                    </div>
+                    <div class="input-block">
+                        <label>Secure Password</label>
+                        <input type="password" id="admin-pass" placeholder="••••••••">
+                    </div>
+                    <button class="order-now-btn" onclick="handleAdminLogin(event)"
+                        style="width:100%; margin-top:16px;">
+                        Access Console <i data-lucide="lock"></i>
+                    </button>
+                    <p style="margin-top:16px; text-align:center; color:var(--text-dim); font-size:0.85rem;">Restricted
+                        Access Only</p>
+                </div>
+            </main>
+        </div>
+
+        <!-- Floating Chat Bot -->
+        <div class="fab-bot" onclick="switchTab('chat')">
+            <i data-lucide="bot"></i>
+            <span class="pulse-ring"></span>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav class="glass-nav">
+            <div class="nav-item active" onclick="switchTab('feed')"><i data-lucide="home"></i><span>Home</span></div>
+            <div class="nav-item" onclick="switchTab('discover')"><i data-lucide="compass"></i><span>Discover</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('maps')"><i data-lucide="map"></i><span>Maps</span></div>
+            <div class="nav-item" onclick="switchTab('chat')"><i data-lucide="message-circle"></i><span>Chat</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('orders')"><i data-lucide="package"></i><span>Orders</span></div>
+            <div class="nav-item" onclick="switchTab('profile')"><i data-lucide="user"></i><span>Profile</span></div>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

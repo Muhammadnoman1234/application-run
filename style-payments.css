@@ -1,0 +1,55 @@
+/* --- Payment Buttons --- */
+.payment-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--glass);
+    border-radius: 12px;
+    background: var(--card-bg);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.payment-btn:active {
+    transform: scale(0.98);
+}
+
+.easypaisa {
+    border-left: 4px solid #4CAF50;
+}
+
+.jazzcash {
+    border-left: 4px solid #FF5722;
+}
+
+.ep-badge {
+    background: #4CAF50;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.8rem;
+    margin-right: 12px;
+}
+
+.jc-badge {
+    background: #FF5722;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 0.8rem;
+    margin-right: 12px;
+}
+
+.tracker-card {
+    background: var(--card-bg);
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--glass);
+}
